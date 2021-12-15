@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="dev.ry4nkim.fitpet_homework.util.Utils" />
+
+        <variable
+            name="position"
+            type="java.lang.Integer" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="weather"
+            type="dev.ry4nkim.fitpet_homework.domain.model.WeatherApiResponse.ConsolidatedWeather" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{weather.title != null ? View.VISIBLE : View.GONE}">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#333"
+                android:visibility="@{position > 0 ? View.VISIBLE : View.GONE}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="8dp"
+                android:text="@{weather.title}"
+                android:textColor="#333"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#333" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{position % 6 == 0 ? "Today" : position % 6 == 1 ? "Tomorrow" : Utils.INSTANCE.dateFormat(weather.applicableDate)}'
+                android:textColor="#555"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        app:bindImage='@{"https://www.metaweather.com/static/img/weather/png/" + weather.weatherStateAbbr + ".png"}' />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="8dp"
+                        android:text="@{weather.weatherStateName}"
+                        android:textColor="#666"
+                        android:textSize="14sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text='@{"Max : " + @string/double_to_int(weather.maxTemp) + "°C"}'
+                    android:textColor="#666"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:text='@{"Min : " + @string/double_to_int(weather.minTemp) + "°C"}'
+                    android:textColor="#666"
+                    android:textSize="14sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCC" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
